@@ -1,6 +1,7 @@
 import { CartDrawer } from "./CartDrawer";
 import { User } from "lucide-react";
 import { useUserStore } from "@/stores/userStore";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const { isAuthenticated } = useUserStore();
@@ -27,13 +28,13 @@ export function Header() {
             Products
           </a>
           {isAuthenticated && (
-            <a
-              href="/profile"
+            <Link
+              to="/profile"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
             >
               <User className="h-4 w-4" />
               Profile
-            </a>
+            </Link>
           )}
         </nav>
         <CartDrawer />
