@@ -1,0 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
+import {
+  PRODUCT_BY_HANDLE_QUERY,
+  PRODUCTS_QUERY,
+  ShopifyProduct,
+  storefrontApiRequest,
+} from "@/lib/shopify";
+
+export function useProducts(first: number = 20) {
+  return useQuery({
+    queryKey: ["products", first],
+    queryFn: async () => {
+      const data = await storefrontApiRequest(PRODUCTS_QUERY, { first });
+      return data?.data?.products?.edges as ShopifyProduct[] || [];
+    },
+  });
+}
+
+export function useProductByHandle(handle: string) {
+  return useQuery({
+    queryKey: ["product", handle],
+    queryFn: async () => {
+      const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, {
+        handle,
+      });
+      return data?.data?.productByHandle;
+    },
+    enabled: !!handle,
+  });
+}
